@@ -31,7 +31,7 @@
         .kid-col { display: flex; flex-direction: column; align-items: center; flex: 1; }
         .kid-role { font-family: 'Nunito', sans-serif; font-size: 11px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 6px; }
         .kid-role.groom { color: #f9a825; } .kid-role.bride { color: #f06292; }
-        .kid-img { width: clamp(110px, 28vw, 155px); height: clamp(120px, 30vw, 165px); object-fit: contain; object-position: bottom center; display: block; filter: drop-shadow(0 6px 8px rgba(0,0,0,0.05)); }
+        .kid-img { width: clamp(110px, 28vw, 155px); height: clamp(120px, 30vw, 165px); object-fit: contain; object-position: bottom center; display: block; filter: drop-shadow(0 6px 8px rgba(0,0,0,0.05)); background: #f0e0e0; border-radius: 10px; }
         .heart-mid { font-size: 28px; padding-bottom: 18px; flex-shrink: 0; animation: pulse 1.4s ease-in-out infinite; }
         @keyframes pulse { 0%,100%{transform:scale(1)} 50%{transform:scale(1.25)} }
         .kids-names { font-family: 'Nunito', sans-serif; font-size: clamp(22px, 6vw, 34px); font-weight: 900; letter-spacing: 1px; margin-top: 0.4rem; }
@@ -83,9 +83,9 @@
             <span class="star-tl">✨</span><span class="star-tr">⭐</span><span class="star-bl">💫</span><span class="star-br">🌟</span>
             <div class="kids-title">ТИЛИ-ТИЛИ<br><span class="pink">ТЕСТО</span></div>
             <div class="kids-photos">
-                <div class="kid-col"><div class="kid-role groom">Жених</div><img class="kid-img" src="Daniil.png" alt="Маленький Даниил"></div>
+                <div class="kid-col"><div class="kid-role groom">Жених</div><img class="kid-img" src="Daniil.png" alt="Маленький Даниил" onerror="this.style.display='none';this.nextElementSibling.style.display='block';"><span style="display:none;font-size:14px;padding:20px;color:var(--text-light)">👦</span></div>
                 <div class="heart-mid">💗</div>
-                <div class="kid-col"><div class="kid-role bride">Невеста</div><img class="kid-img" src="Yulia.png" alt="Маленькая Юлия"></div>
+                <div class="kid-col"><div class="kid-role bride">Невеста</div><img class="kid-img" src="Yulia.png" alt="Маленькая Юлия" onerror="this.style.display='none';this.nextElementSibling.style.display='block';"><span style="display:none;font-size:14px;padding:20px;color:var(--text-light)">👧</span></div>
             </div>
             <div class="kids-names"><span class="gn">Даниил</span><span class="pl">+</span><span class="bn">Юлия</span></div>
         </div>
@@ -152,8 +152,8 @@
 </div>
 
 <script>
-    // ⚠️ ЗАМЕНИТЕ НА URL ВАШЕГО РАЗВЕРНУТОГО ВЕБ-ПРИЛОЖЕНИЯ GOOGLE APPS SCRIPT
-    const GAS_URL = 'https://script.google.com/macros/s/AKfycbxRW0QonQ2O0uHCjIlBz_BIkwbAzhFaSEuoThnusdAsM0-IzhA5XgwLzJRpVHxFk80/exec';
+    // ⚠️ ВСТАВЬТЕ URL ВАШЕГО РАЗВЕРНУТОГО ВЕБ-ПРИЛОЖЕНИЯ GOOGLE APPS SCRIPT
+    const GAS_URL = 'https://script.google.com/macros/s/ВАШ_ИДЕНТИФИКАТОР/exec';
 
     let attend = '', alone = '', companionCount = 1;
     const drinkOptions = [
@@ -345,7 +345,6 @@
     }
 
     function submitYes() {
-        const name = document.getElementById('name').value.trim();
         if (alone === 'with') {
             let allFilled = true;
             for (let i = 1; i <= companionCount; i++) {
