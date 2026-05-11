@@ -5,6 +5,16 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Приглашение — Даниил и Юлия</title>
     <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>💍</text></svg>">
+    
+    <!-- Open Graph для красивого превью в мессенджерах/соцсетях -->
+    <meta property="og:title" content="Приглашение на свадьбу — Даниил и Юлия">
+    <meta property="og:description" content="11 июня 2026. Будем рады видеть вас!">
+    <meta property="og:image" content="https://dangromv.github.io/wedding/preview.jpg">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    <meta property="og:type" content="website">
+    <meta name="twitter:card" content="summary_large_image">
+
     <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&family=Jost:wght@300;400;500&family=Nunito:wght@400;700;900&display=swap" rel="stylesheet">
     <style>
         * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -63,9 +73,13 @@
         .decline-wrap { text-align: center; padding: 1.5rem 0; } .decline-wrap .flower { font-size: 38px; margin-bottom: 1.2rem; } .decline-wrap p { font-family: 'Cormorant Garamond', serif; font-size: 21px; font-style: italic; font-weight: 300; color: var(--text-mid); line-height: 1.8; }
         .bottom-border { height: 4px; background: linear-gradient(90deg, transparent, var(--rose), var(--gold), var(--rose), transparent); margin-top: 1.5rem; }
         .download-btn { display: none; margin-top: 1rem; background: transparent; color: var(--rose-deep); border: 1px solid var(--rose-deep); padding: 8px 20px; border-radius: 3px; font-size: 12px; letter-spacing: 2px; text-transform: uppercase; cursor: pointer; transition: all 0.2s; } .download-btn:hover { background: var(--rose-deep); color: #fff; }
+        .hidden-preview { display: none; }
     </style>
 </head>
 <body>
+    <!-- Скрытое изображение для превью (только для мессенджеров) -->
+    <img class="hidden-preview" src="preview.jpg" alt="">
+
 <div class="page" id="page">
     <div class="top-border"></div>
     <div class="hero">
@@ -123,10 +137,10 @@
             <button class="btn-back" onclick="show('s1')">← Назад</button>
             <div class="q-block"><span class="q-label">Придёте ли вы с кем-то?</span><div class="radio-group">
                 <label class="radio-opt" onclick="pick(this,'alone','solo');toggleCompanions(false)"><input type="radio" name="alone" value="solo"><span>Приду один(а)</span></label>
-                <label class="radio-opt" onclick="pick(this,'alone','with');toggleCompanions(true)"><input type="radio" name="alone" value="with"><span>Приду с кем-то</span></label>
+                <label class="radio-opt" onclick="pick(this,'alone','with');toggleCompanions(true)"><input type="radio" name="alone" value="with"><span>Приду с гостями</span></label>
             </div></div>
             <div class="q-block" id="comp-block" style="display:none">
-                <span class="q-label" style="font-size:17px">Количество спутников</span>
+                <span class="q-label" style="font-size:17px">Количество гостей</span>
                 <div class="guest-row"><label>Со мной будет:</label><div class="guest-counter"><button onclick="changeCnt(-1)">−</button><div class="cnt" id="gcnt">1</div><button onclick="changeCnt(1)">+</button></div></div>
                 <div class="companion-fields" id="comp-names"></div>
             </div>
@@ -194,7 +208,7 @@
         c.innerHTML = '';
         for (let i = 1; i <= companionCount; i++) {
             const div = document.createElement('div');
-            div.innerHTML = `<div class="companion-label">Спутник ${i}</div>
+            div.innerHTML = `<div class="companion-label">Гость ${i}</div>
                              <input type="text" placeholder="Имя и фамилия" id="comp${i}" style="margin-bottom:6px">`;
             c.appendChild(div);
         }
@@ -219,7 +233,7 @@
                 if (el && !el.value.trim()) { allFilled = false; el.closest('.q-block')?.classList.add('has-err'); }
             }
             if (!allFilled) {
-                alert('Пожалуйста, укажите имена всех спутников — это важно для рассадки.');
+                alert('Пожалуйста, укажите имена всех гостей — это важно для рассадки.');
                 return;
             }
         }
@@ -236,7 +250,7 @@
             for (let i = 1; i <= companionCount; i++) {
                 const el = document.getElementById('comp' + i);
                 const compName = el ? el.value.trim() : '';
-                addDrinkPerson(container, compName || `Спутник ${i}`, `comp_${i}`);
+                addDrinkPerson(container, compName || `Гость ${i}`, `comp_${i}`);
             }
         }
     }
@@ -299,7 +313,6 @@
         return data;
     }
 
-    // Отправляем данные как URL-encoded, чтобы избежать preflight CORS
     function submitViaFetch(data, callback) {
         fetch(GAS_URL, {
             method: 'POST',
@@ -308,7 +321,6 @@
         .then(response => response.json())
         .then(result => {
             if (result && result.success) {
-                // Если таблица не обновилась, но JSON сохранён, предупредим в консоли
                 if (result.warning) console.warn('Предупреждение:', result.warning);
                 callback(true);
             } else {
@@ -362,7 +374,7 @@
                 if (el && !el.value.trim()) { allFilled = false; el.closest('.q-block')?.classList.add('has-err'); }
             }
             if (!allFilled) {
-                alert('Пожалуйста, вернитесь и укажите имена всех спутников.');
+                alert('Пожалуйста, вернитесь и укажите имена всех гостей.');
                 show('s2');
                 return;
             }
