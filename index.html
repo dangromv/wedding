@@ -1,0 +1,402 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Приглашение — Даниил и Юлия</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&family=Jost:wght@300;400;500&family=Nunito:wght@400;700;900&display=swap" rel="stylesheet">
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        :root { --rose: #c8a4a4; --rose-light: #f7eeee; --rose-deep: #9b6b6b; --gold: #b8975a; --cream: #faf7f0; --text-dark: #3a2e2e; --text-mid: #6b5555; --text-light: #a08888; --card-bg: #fffef7; }
+        body { background: radial-gradient(ellipse at 50% 0%, #fff8f2 0%, var(--cream) 50%); font-family: 'Jost', sans-serif; color: var(--text-dark); min-height: 100vh; display: flex; justify-content: center; padding: 0 1rem; }
+        .page { position: relative; overflow: hidden; max-width: 560px; width: 100%; background: rgba(255,255,245,0.6); backdrop-filter: blur(2px); border-radius: 2px; padding: 0 0 2rem; margin: 1.5rem 0; box-shadow: 0 20px 40px rgba(155,107,107,0.08); }
+        .petal { position: absolute; font-size: 18px; opacity: 0; animation: fall linear infinite; pointer-events: none; z-index: 10; }
+        @keyframes fall { 0% { transform: translateY(-20px) rotate(0deg); opacity: 0.7; } 100% { transform: translateY(800px) rotate(360deg); opacity: 0; } }
+        .top-border { height: 4px; background: linear-gradient(90deg, transparent, var(--gold), var(--rose), var(--gold), transparent); }
+        .hero { text-align: center; padding: 3rem 2rem 0.8rem; }
+        .hero-sup { font-size: 10px; letter-spacing: 6px; text-transform: uppercase; color: var(--text-light); font-weight: 300; margin-bottom: 1.5rem; }
+        .flourish { color: var(--gold); font-size: 22px; letter-spacing: 12px; opacity: 0.6; display: block; margin-bottom: 0.8rem; }
+        .name-main { font-family: 'Cormorant Garamond', serif; font-size: clamp(48px, 10vw, 76px); font-weight: 300; font-style: italic; color: var(--text-dark); line-height: 1; display: block; }
+        .amp { font-family: 'Cormorant Garamond', serif; font-size: clamp(28px, 6vw, 46px); font-style: italic; color: var(--gold); opacity: 0.9; display: block; margin: 0.15em 0; line-height: 1; }
+        .event-date { font-family: 'Cormorant Garamond', serif; font-size: 16px; letter-spacing: 5px; color: var(--text-mid); margin: 1rem 0 0.5rem; }
+        .deco-divider { text-align: center; color: var(--rose); font-size: 16px; letter-spacing: 10px; padding: 0.4rem 0; opacity: 0.65; }
+        .kids-outer { padding: 0 1.2rem; margin: 0.8rem 0; }
+        .kids-card { background: var(--card-bg); border: 2.5px dashed #f9b8cc; border-radius: 24px; padding: 1.2rem 0.8rem 1rem; position: relative; text-align: center; box-shadow: 0 8px 20px rgba(249,184,204,0.15); }
+        .star-tl, .star-tr, .star-bl, .star-br { position: absolute; font-size: 18px; opacity: 0.55; pointer-events: none; animation: twinkle 2s ease-in-out infinite; }
+        .star-tl { top: 10px; left: 12px; } .star-tr { top: 10px; right: 12px; animation-delay: 0.5s; } .star-bl { bottom: 55px; left: 12px; font-size: 14px; animation-delay: 1s; } .star-br { bottom: 55px; right: 12px; font-size: 15px; animation-delay: 1.5s; }
+        @keyframes twinkle { 0%,100%{opacity:0.3;transform:scale(1)} 50%{opacity:0.8;transform:scale(1.2)} }
+        .kids-title { font-family: 'Nunito', sans-serif; font-size: clamp(22px, 6vw, 34px); font-weight: 900; color: #f9a825; letter-spacing: 1px; line-height: 1.2; margin-bottom: 0.3rem; }
+        .kids-title .pink { color: #f06292; }
+        .kids-photos { display: flex; justify-content: center; align-items: flex-end; gap: 0.3rem; margin: 0.4rem 0 0; }
+        .kid-col { display: flex; flex-direction: column; align-items: center; flex: 1; }
+        .kid-role { font-family: 'Nunito', sans-serif; font-size: 11px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 6px; }
+        .kid-role.groom { color: #f9a825; } .kid-role.bride { color: #f06292; }
+        .kid-img { width: clamp(110px, 28vw, 155px); height: clamp(120px, 30vw, 165px); object-fit: contain; object-position: bottom center; display: block; filter: drop-shadow(0 6px 8px rgba(0,0,0,0.05)); }
+        .heart-mid { font-size: 28px; padding-bottom: 18px; flex-shrink: 0; animation: pulse 1.4s ease-in-out infinite; }
+        @keyframes pulse { 0%,100%{transform:scale(1)} 50%{transform:scale(1.25)} }
+        .kids-names { font-family: 'Nunito', sans-serif; font-size: clamp(22px, 6vw, 34px); font-weight: 900; letter-spacing: 1px; margin-top: 0.4rem; }
+        .kids-names .gn { color: #f9a825; } .kids-names .pl { color: #f06292; margin: 0 5px; } .kids-names .bn { color: #f06292; }
+        .program { max-width: 480px; margin: 0.5rem auto 0; padding: 0 1.5rem; }
+        .program-block { display: flex; gap: 14px; align-items: flex-start; padding: 1.2rem 0; border-bottom: 0.5px solid #ecdada; transition: background 0.2s; }
+        .program-block:hover { background: rgba(255,255,250,0.6); } .program-block:last-child { border-bottom: none; }
+        .program-time { font-family: 'Cormorant Garamond', serif; font-size: 19px; color: var(--gold); min-width: 55px; padding-top: 2px; font-weight: 300; letter-spacing: 1px; flex-shrink: 0; }
+        .program-icon { font-size: 20px; padding-top: 2px; flex-shrink: 0; } .program-body { flex: 1; }
+        .program-title { font-family: 'Cormorant Garamond', serif; font-size: 18px; font-style: italic; color: var(--text-dark); display: block; margin-bottom: 5px; }
+        .program-sub { font-size: 13px; color: var(--text-light); font-weight: 300; line-height: 1.7; } .program-sub strong { color: var(--text-mid); font-weight: 400; }
+        .map-link { display: inline-block; margin-top: 6px; font-size: 11px; color: var(--rose-deep); text-decoration: none; border-bottom: 1px dotted var(--rose); transition: all 0.2s; } .map-link:hover { color: #7a5050; border-bottom-color: #7a5050; }
+        .dress-code { text-align: center; padding: 1rem 2rem 1.5rem; max-width: 480px; margin: 0 auto; } .dress-icon { font-size: 34px; margin-bottom: 0.3rem; letter-spacing: 4px; } .dress-title { font-family: 'Cormorant Garamond', serif; font-size: 26px; font-style: italic; font-weight: 300; color: var(--text-dark); margin-bottom: 0.7rem; } .dress-text { font-size: 14px; color: var(--text-mid); font-weight: 300; line-height: 1.7; font-style: italic; }
+        .rsvp-wrap { max-width: 500px; margin: 0 auto; padding: 0 1.5rem 3rem; } .rsvp-heading { font-family: 'Cormorant Garamond', serif; font-size: 28px; font-style: italic; font-weight: 300; text-align: center; color: var(--text-dark); margin-bottom: 2rem; }
+        .screen { display: none; animation: fadeIn 0.45s ease; } .screen.active { display: block; } @keyframes fadeIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
+        .q-label { font-family: 'Cormorant Garamond', serif; font-size: 20px; font-style: italic; color: var(--text-dark); display: block; margin-bottom: 0.9rem; } .q-block { margin-bottom: 1.6rem; }
+        input[type="text"] { width: 100%; padding: 12px 16px; border: 0.5px solid #dcc8c8; border-radius: 3px; font-family: 'Jost', sans-serif; font-size: 14px; font-weight: 300; color: var(--text-dark); background: white; outline: none; transition: border-color 0.2s, box-shadow 0.2s; } input[type="text"]:focus { border-color: var(--rose-deep); box-shadow: 0 0 0 3px rgba(155,107,107,0.1); }
+        .radio-group { display: flex; flex-direction: column; gap: 10px; } .radio-opt { display: flex; align-items: center; gap: 12px; padding: 12px 16px; border: 0.5px solid #dcc8c8; border-radius: 3px; cursor: pointer; transition: all 0.18s; background: white; } .radio-opt:hover { border-color: var(--rose); background: var(--rose-light); } .radio-opt.sel { border-color: var(--rose-deep); background: var(--rose-light); } .radio-opt input[type="radio"] { accent-color: var(--rose-deep); width: 16px; height: 16px; flex-shrink: 0; } .radio-opt span { font-size: 15px; color: var(--text-mid); font-weight: 300; } .radio-opt.sel span { color: var(--text-dark); font-weight: 400; }
+        .guest-row { display: flex; align-items: center; gap: 14px; margin-top: 0.8rem; } .guest-row label { font-size: 14px; color: var(--text-mid); font-weight: 300; white-space: nowrap; }
+        .guest-counter { display: flex; align-items: center; border: 0.5px solid #dcc8c8; border-radius: 3px; overflow: hidden; background: white; } .guest-counter button { width: 40px; height: 42px; border: none; background: transparent; font-size: 18px; cursor: pointer; color: var(--rose-deep); transition: background 0.15s; } .guest-counter button:hover { background: var(--rose-light); } .guest-counter .cnt { padding: 0 20px; font-family: 'Cormorant Garamond', serif; font-size: 20px; color: var(--text-dark); min-width: 60px; text-align: center; border-left: 0.5px solid #dcc8c8; border-right: 0.5px solid #dcc8c8; line-height: 42px; }
+        .companion-fields { margin-top: 1.2rem; display: flex; flex-direction: column; gap: 10px; } .companion-label { font-size: 13px; color: var(--text-light); letter-spacing: 1px; margin-bottom: 4px; text-transform: uppercase; }
+        .btn-main { width: 100%; padding: 14px 24px; background: var(--rose-deep); color: #fdf0f0; border: none; border-radius: 3px; font-family: 'Jost', sans-serif; font-size: 12px; font-weight: 500; letter-spacing: 4px; text-transform: uppercase; cursor: pointer; transition: background 0.2s, transform 0.1s; margin-top: 0.8rem; } .btn-main:hover { background: #8a5c5c; } .btn-main:active { transform: scale(0.98); }
+        .btn-back { background: transparent; color: var(--text-light); border: 0.5px solid #dcc8c8; padding: 8px 20px; border-radius: 3px; font-family: 'Jost', sans-serif; font-size: 11px; letter-spacing: 2px; text-transform: uppercase; cursor: pointer; margin-bottom: 1.4rem; transition: all 0.18s; } .btn-back:hover { border-color: var(--rose); color: var(--rose-deep); }
+        .err { color: #b05050; font-size: 12px; font-style: italic; margin-top: 6px; display: none; } .has-err .err { display: block; } .has-err input[type="text"] { border-color: #d4a0a0; }
+        .drink-section { margin: 1.2rem 0 0.5rem; border-top: 0.5px solid #ecdada; padding-top: 1.2rem; } .drink-title { font-family: 'Cormorant Garamond', serif; font-size: 20px; font-style: italic; margin-bottom: 0.8rem; color: var(--text-dark); } .drink-person { margin-bottom: 1.4rem; } .drink-person-name { font-weight: 400; color: var(--text-mid); margin-bottom: 0.5rem; font-size: 15px; }
+        .success-wrap { text-align: center; padding: 1.5rem 0 2rem; } .success-ring { width: 68px; height: 68px; border-radius: 50%; border: 1px solid var(--gold); margin: 0 auto 1.8rem; display: flex; align-items: center; justify-content: center; font-size: 28px; color: var(--gold); animation: ringIn 0.6s ease; } @keyframes ringIn { from { transform: scale(0.5); opacity: 0; } to { transform: scale(1); opacity: 1; } } .success-wrap h3 { font-family: 'Cormorant Garamond', serif; font-size: 34px; font-style: italic; font-weight: 300; color: var(--text-dark); margin-bottom: 0.8rem; } .success-wrap p { font-size: 15px; color: var(--text-light); line-height: 1.9; font-weight: 300; }
+        .summary { background: white; border: 0.5px solid #e8d5d5; border-radius: 3px; padding: 1.2rem 1.5rem; margin: 1.8rem 0; text-align: left; box-shadow: 0 4px 12px rgba(0,0,0,0.02); } .s-row { display: flex; justify-content: space-between; align-items: baseline; padding: 6px 0; font-size: 14px; border-bottom: 0.5px solid #f5eaea; } .s-row:last-child { border-bottom: none; } .s-row .sl { color: var(--text-light); font-weight: 300; } .s-row .sv { color: var(--text-dark); font-weight: 400; text-align: right; max-width: 65%; }
+        .decline-wrap { text-align: center; padding: 1.5rem 0; } .decline-wrap .flower { font-size: 38px; margin-bottom: 1.2rem; } .decline-wrap p { font-family: 'Cormorant Garamond', serif; font-size: 21px; font-style: italic; font-weight: 300; color: var(--text-mid); line-height: 1.8; }
+        .bottom-border { height: 4px; background: linear-gradient(90deg, transparent, var(--rose), var(--gold), var(--rose), transparent); margin-top: 1.5rem; }
+        .download-btn { display: none; margin-top: 1rem; background: transparent; color: var(--rose-deep); border: 1px solid var(--rose-deep); padding: 8px 20px; border-radius: 3px; font-size: 12px; letter-spacing: 2px; text-transform: uppercase; cursor: pointer; transition: all 0.2s; } .download-btn:hover { background: var(--rose-deep); color: #fff; }
+    </style>
+</head>
+<body>
+<div class="page" id="page">
+    <div class="top-border"></div>
+    <div class="hero">
+        <div class="hero-sup">Вы приглашены</div>
+        <span class="flourish">✦ ✦ ✦</span>
+        <div class="names-wrap">
+            <span class="name-main">Даниил</span>
+            <span class="amp">&amp;</span>
+            <span class="name-main">Юлия</span>
+        </div>
+        <div class="event-date">11 · ИЮНЯ · 2026</div>
+    </div>
+    <div class="deco-divider">✿ ❀ ✿</div>
+    <div class="kids-outer">
+        <div class="kids-card">
+            <span class="star-tl">✨</span><span class="star-tr">⭐</span><span class="star-bl">💫</span><span class="star-br">🌟</span>
+            <div class="kids-title">ТИЛИ-ТИЛИ<br><span class="pink">ТЕСТО</span></div>
+            <div class="kids-photos">
+                <div class="kid-col"><div class="kid-role groom">Жених</div><img class="kid-img" src="Daniil.png" alt="Маленький Даниил"></div>
+                <div class="heart-mid">💗</div>
+                <div class="kid-col"><div class="kid-role bride">Невеста</div><img class="kid-img" src="Yulia.png" alt="Маленькая Юлия"></div>
+            </div>
+            <div class="kids-names"><span class="gn">Даниил</span><span class="pl">+</span><span class="bn">Юлия</span></div>
+        </div>
+    </div>
+    <div class="deco-divider" style="margin-top:0.9rem">✿ ❀ ✿</div>
+    <div class="program">
+        <div class="program-block">
+            <div class="program-time">14:20</div><div class="program-icon">💍</div>
+            <div class="program-body"><span class="program-title">Торжественная церемония бракосочетания</span><span class="program-sub"><strong>ЗАГС</strong><br>Коммунистический просп., 39<br><a class="map-link" href="https://yandex.ru/maps/?text=Коммунистический%20проспект%2039" target="_blank">📍 На карте</a></span></div>
+        </div>
+        <div class="program-block">
+            <div class="program-time">18:00</div><div class="program-icon">🥂</div>
+            <div class="program-body"><span class="program-title">Праздничный банкет</span><span class="program-sub"><strong>Гостиница Мега Палас</strong><br>Diamond Hall · 10 этаж<br><a class="map-link" href="https://yandex.ru/maps/?text=Гостиница%20Мега%20Палас" target="_blank">📍 На карте</a></span></div>
+        </div>
+    </div>
+    <div class="deco-divider" style="margin-top:1rem">✿ ❀ ✿</div>
+    <div class="dress-code">
+        <div class="dress-icon">👗🤵</div>
+        <div class="dress-title">Дресс-код</div>
+        <p class="dress-text">Мы не ставим строгих рамок — просто придите красивыми и нарядными.<br>Для нас важнее всего ваша улыбка и хорошее настроение.</p>
+    </div>
+    <div class="deco-divider" style="margin-bottom:0.5rem">✿ ❀ ✿</div>
+    <div class="rsvp-wrap">
+        <div class="rsvp-heading">Подтвердите присутствие</div>
+        <div class="screen active" id="s1">
+            <div class="q-block" id="fb-name"><span class="q-label">Как вас зовут?</span><input type="text" id="name" placeholder="Имя и фамилия"><div class="err">Пожалуйста, укажите ваше имя</div></div>
+            <div class="q-block"><span class="q-label">Сможете ли вы прийти?</span><div class="radio-group">
+                <label class="radio-opt" onclick="pick(this,'attend','yes')"><input type="radio" name="attend" value="yes"><span>С радостью буду на празднике!</span></label>
+                <label class="radio-opt" onclick="pick(this,'attend','no')"><input type="radio" name="attend" value="no"><span>К сожалению, не смогу прийти</span></label>
+            </div><div class="err" id="att-err">Пожалуйста, выберите вариант</div></div>
+            <button class="btn-main" onclick="next1()">Продолжить</button>
+        </div>
+        <div class="screen" id="s2">
+            <button class="btn-back" onclick="show('s1')">← Назад</button>
+            <div class="q-block"><span class="q-label">Придёте ли вы с кем-то?</span><div class="radio-group">
+                <label class="radio-opt" onclick="pick(this,'alone','solo');toggleCompanions(false)"><input type="radio" name="alone" value="solo"><span>Приду один(а)</span></label>
+                <label class="radio-opt" onclick="pick(this,'alone','with');toggleCompanions(true)"><input type="radio" name="alone" value="with"><span>Приду с кем-то</span></label>
+            </div></div>
+            <div class="q-block" id="comp-block" style="display:none">
+                <span class="q-label" style="font-size:17px">Количество спутников</span>
+                <div class="guest-row"><label>Со мной будет:</label><div class="guest-counter"><button onclick="changeCnt(-1)">−</button><div class="cnt" id="gcnt">1</div><button onclick="changeCnt(1)">+</button></div></div>
+                <div class="companion-fields" id="comp-names"></div>
+            </div>
+            <button class="btn-main" onclick="goToStep3()">Продолжить</button>
+        </div>
+        <div class="screen" id="s3">
+            <button class="btn-back" onclick="show('s2')">← Назад</button>
+            <div class="q-block"><span class="q-label">Телефон для связи <span style="font-size:13px;color:var(--text-light);font-style:normal">(необязательно)</span></span><input type="text" id="phone" placeholder="+7 (___) ___-__-__"></div>
+            <div class="drink-section" id="drink-section"></div>
+            <button class="btn-main" onclick="submitYes()">Отправить ответ ✉</button>
+        </div>
+        <div class="screen" id="s-decline">
+            <div class="decline-wrap"><div class="flower">🌸</div><p>Жаль, что вы не сможете<br>разделить с нами этот день.<br><em>Мы будем помнить о вас.</em></p></div>
+            <button class="btn-main" onclick="submitNo()">Отправить ответ</button>
+        </div>
+        <div class="screen" id="s-ok">
+            <div class="success-wrap"><div class="success-ring">✓</div><h3>Ждём вас!</h3><p id="ok-message">Ваш ответ отправлен. Мы так рады, что вы будете с нами.</p><div class="summary" id="summary"></div><button class="download-btn" id="download-json-btn">📥 Скачать ответ JSON</button></div>
+        </div>
+        <div class="screen" id="s-ok2">
+            <div class="success-wrap"><div class="success-ring">✉</div><h3>Спасибо!</h3><p id="decline-message">Ваш ответ отправлен.</p><button class="download-btn" id="download-json-btn2">📥 Скачать ответ JSON</button></div>
+        </div>
+    </div>
+    <div class="bottom-border"></div>
+</div>
+
+<script>
+    // ⚠️ ЗАМЕНИТЕ НА URL ВАШЕГО РАЗВЕРНУТОГО ВЕБ-ПРИЛОЖЕНИЯ GOOGLE APPS SCRIPT
+    const GAS_URL = 'https://script.google.com/macros/s/AKfycbxRW0QonQ2O0uHCjIlBz_BIkwbAzhFaSEuoThnusdAsM0-IzhA5XgwLzJRpVHxFk80/exec';
+
+    let attend = '', alone = '', companionCount = 1;
+    const drinkOptions = [
+        { value: 'champagne', label: '🍾 Шампанское' },
+        { value: 'red_wine',  label: '🍷 Красное вино' },
+        { value: 'white_wine', label: '🥂 Белое вино' },
+        { value: 'vodka',      label: '🍸 Водка' },
+        { value: 'no_alcohol', label: '🚫 Не пью алкоголь' }
+    ];
+
+    function show(id) {
+        document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+        document.getElementById(id).classList.add('active');
+    }
+
+    function pick(el, name, val) {
+        document.querySelectorAll('[name=' + name + ']').forEach(r => r.closest('.radio-opt').classList.remove('sel'));
+        el.classList.add('sel');
+        el.querySelector('input').checked = true;
+        if (name === 'attend') attend = val;
+        if (name === 'alone') alone = val;
+    }
+
+    function toggleCompanions(visible) {
+        document.getElementById('comp-block').style.display = visible ? 'block' : 'none';
+        if (visible) renderCompanionNames();
+    }
+
+    function changeCnt(d) {
+        companionCount = Math.max(1, Math.min(8, companionCount + d));
+        document.getElementById('gcnt').textContent = companionCount;
+        renderCompanionNames();
+    }
+
+    function renderCompanionNames() {
+        const c = document.getElementById('comp-names');
+        c.innerHTML = '';
+        for (let i = 1; i <= companionCount; i++) {
+            const div = document.createElement('div');
+            div.innerHTML = `<div class="companion-label">Спутник ${i}</div>
+                             <input type="text" placeholder="Имя и фамилия" id="comp${i}" style="margin-bottom:6px">`;
+            c.appendChild(div);
+        }
+    }
+
+    function next1() {
+        const name = document.getElementById('name').value.trim();
+        let ok = true;
+        const fb = document.getElementById('fb-name');
+        if (!name) { fb.classList.add('has-err'); ok = false; } else fb.classList.remove('has-err');
+        if (!attend) { document.getElementById('att-err').style.display = 'block'; ok = false; }
+        else document.getElementById('att-err').style.display = 'none';
+        if (!ok) return;
+        show(attend === 'no' ? 's-decline' : 's2');
+    }
+
+    function goToStep3() {
+        if (alone === 'with') {
+            let allFilled = true;
+            for (let i = 1; i <= companionCount; i++) {
+                const el = document.getElementById('comp' + i);
+                if (el && !el.value.trim()) { allFilled = false; el.closest('.q-block')?.classList.add('has-err'); }
+            }
+            if (!allFilled) {
+                alert('Пожалуйста, укажите имена всех спутников — это важно для рассадки.');
+                return;
+            }
+        }
+        show('s3');
+        renderDrinks();
+    }
+
+    function renderDrinks() {
+        const container = document.getElementById('drink-section');
+        container.innerHTML = '<div class="drink-title">🍷 Предпочтения по напиткам</div>';
+        const mainName = document.getElementById('name').value.trim() || 'Вы';
+        addDrinkPerson(container, mainName, 'main');
+        if (alone === 'with') {
+            for (let i = 1; i <= companionCount; i++) {
+                const el = document.getElementById('comp' + i);
+                const compName = el ? el.value.trim() : '';
+                addDrinkPerson(container, compName || `Спутник ${i}`, `comp_${i}`);
+            }
+        }
+    }
+
+    function addDrinkPerson(container, personName, prefix) {
+        const wrapper = document.createElement('div');
+        wrapper.className = 'drink-person';
+        wrapper.innerHTML = `<div class="drink-person-name">${personName}</div>`;
+        const radioGroup = document.createElement('div');
+        radioGroup.className = 'radio-group';
+        drinkOptions.forEach(opt => {
+            const label = document.createElement('label');
+            label.className = 'radio-opt';
+            label.setAttribute('onclick', `pick(this, 'drink_${prefix}', '${opt.value}')`);
+            label.innerHTML = `<input type="radio" name="drink_${prefix}" value="${opt.value}"> <span>${opt.label}</span>`;
+            radioGroup.appendChild(label);
+        });
+        wrapper.appendChild(radioGroup);
+        container.appendChild(wrapper);
+    }
+
+    function getSelectedDrink(prefix) {
+        const radios = document.getElementsByName('drink_' + prefix);
+        for (let radio of radios) if (radio.checked) {
+            const opt = drinkOptions.find(o => o.value === radio.value);
+            return opt ? opt.label : radio.value;
+        }
+        return '—';
+    }
+
+    function buildResponseJSON() {
+        const name = document.getElementById('name').value.trim();
+        const phone = document.getElementById('phone').value.trim();
+        const data = {
+            name,
+            attend: attend === 'yes',
+            phone: phone || null,
+            submitted: new Date().toISOString(),
+            drinks: {}
+        };
+        data.drinks[name] = getSelectedDrink('main');
+
+        if (attend === 'yes' && alone === 'with') {
+            data.companions = [];
+            for (let i = 1; i <= companionCount; i++) {
+                const el = document.getElementById('comp' + i);
+                const compName = el ? el.value.trim() : '';
+                if (compName) {
+                    data.companions.push({ name: compName, drink: getSelectedDrink(`comp_${i}`) });
+                    data.drinks[compName] = getSelectedDrink(`comp_${i}`);
+                }
+            }
+            data.total_guests = 1 + (data.companions ? data.companions.length : 0);
+        } else if (attend === 'yes') {
+            data.companions = [];
+            data.total_guests = 1;
+        } else {
+            data.total_guests = 0;
+        }
+        return data;
+    }
+
+    function submitViaFetch(data, callback) {
+        fetch(GAS_URL, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(data)
+        })
+        .then(response => response.json())
+        .then(result => {
+            if (result && result.success) callback(true);
+            else callback(false);
+        })
+        .catch(() => callback(false));
+    }
+
+    function downloadJSON(data, filename) {
+        const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url; a.download = filename;
+        document.body.appendChild(a); a.click(); document.body.removeChild(a);
+        URL.revokeObjectURL(url);
+    }
+
+    function finalizeSubmission(data, successScreenId) {
+        const isOk = successScreenId === 's-ok';
+        const btnId = isOk ? 'download-json-btn' : 'download-json-btn2';
+        const msgId = isOk ? 'ok-message' : 'decline-message';
+
+        submitViaFetch(data, (serverOk) => {
+            if (serverOk) {
+                document.getElementById(msgId).textContent = isOk ?
+                    'Ваш ответ отправлен. Мы рады, что вы будете с нами.' : 'Ваш ответ отправлен.';
+                document.getElementById(btnId).style.display = 'none';
+            } else {
+                document.getElementById(msgId).textContent = isOk ?
+                    'Не удалось отправить автоматически. Сохраните ответ локально.' :
+                    'Не удалось отправить. Сохраните ответ локально.';
+                const btn = document.getElementById(btnId);
+                btn.style.display = 'inline-block';
+                btn.onclick = () => downloadJSON(data, `rsvp_${data.name.replace(/\s+/g, '_')}.json`);
+            }
+        });
+
+        show(successScreenId);
+    }
+
+    function submitYes() {
+        const name = document.getElementById('name').value.trim();
+        if (alone === 'with') {
+            let allFilled = true;
+            for (let i = 1; i <= companionCount; i++) {
+                const el = document.getElementById('comp' + i);
+                if (el && !el.value.trim()) { allFilled = false; el.closest('.q-block')?.classList.add('has-err'); }
+            }
+            if (!allFilled) {
+                alert('Пожалуйста, вернитесь и укажите имена всех спутников.');
+                show('s2');
+                return;
+            }
+        }
+
+        const data = buildResponseJSON();
+
+        const rows = [['Гость', data.name], ['Присутствие', 'Будет']];
+        if (data.phone) rows.push(['Телефон', data.phone]);
+        rows.push(['Всего гостей', data.total_guests || '1']);
+
+        let drinkRows = '';
+        for (const [person, drink] of Object.entries(data.drinks)) {
+            drinkRows += `<div class="s-row"><span class="sl">${person}</span><span class="sv">${drink}</span></div>`;
+        }
+        document.getElementById('summary').innerHTML = rows.map(([l,v]) => `<div class="s-row"><span class="sl">${l}</span><span class="sv">${v}</span></div>`).join('') + drinkRows;
+
+        finalizeSubmission(data, 's-ok');
+        startPetals();
+    }
+
+    function submitNo() {
+        finalizeSubmission(buildResponseJSON(), 's-ok2');
+    }
+
+    function startPetals() {
+        const petalsEmoji = ['🌸','🌹','🌺','✿','❀'];
+        const page = document.getElementById('page');
+        for (let i = 0; i < 14; i++) {
+            setTimeout(() => {
+                const p = document.createElement('div');
+                p.className = 'petal';
+                p.textContent = petalsEmoji[Math.floor(Math.random() * petalsEmoji.length)];
+                p.style.left = Math.random() * 100 + '%';
+                p.style.top = '-30px';
+                p.style.animationDuration = (3 + Math.random() * 3) + 's';
+                p.style.animationDelay = (Math.random() * 2) + 's';
+                p.style.fontSize = (14 + Math.random() * 10) + 'px';
+                page.appendChild(p);
+                setTimeout(() => p.remove(), 7000);
+            }, i * 200);
+        }
+    }
+</script>
+</body>
+</html>
