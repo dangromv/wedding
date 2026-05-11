@@ -31,7 +31,7 @@
         .kid-col { display: flex; flex-direction: column; align-items: center; flex: 1; }
         .kid-role { font-family: 'Nunito', sans-serif; font-size: 11px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 6px; }
         .kid-role.groom { color: #f9a825; } .kid-role.bride { color: #f06292; }
-        .kid-img { width: clamp(110px, 28vw, 155px); height: clamp(120px, 30vw, 165px); object-fit: contain; object-position: bottom center; display: block; filter: drop-shadow(0 6px 8px rgba(0,0,0,0.05)); background: #f0e0e0; border-radius: 10px; }
+        .kid-img { width: clamp(110px, 28vw, 155px); height: clamp(120px, 30vw, 165px); object-fit: contain; object-position: bottom center; display: block; filter: drop-shadow(0 6px 8px rgba(0,0,0,0.05)); border-radius: 10px; }
         .heart-mid { font-size: 28px; padding-bottom: 18px; flex-shrink: 0; animation: pulse 1.4s ease-in-out infinite; }
         @keyframes pulse { 0%,100%{transform:scale(1)} 50%{transform:scale(1.25)} }
         .kids-names { font-family: 'Nunito', sans-serif; font-size: clamp(22px, 6vw, 34px); font-weight: 900; letter-spacing: 1px; margin-top: 0.4rem; }
@@ -298,19 +298,27 @@
         return data;
     }
 
-    // ОБНОВЛЁННАЯ ФУНКЦИЯ ОТПРАВКИ – больше никакого preflight
+    // Отправляем данные как URL-encoded, чтобы избежать preflight CORS
     function submitViaFetch(data, callback) {
         fetch(GAS_URL, {
             method: 'POST',
             body: new URLSearchParams({ data: JSON.stringify(data) })
-            // не указываем Content-Type, браузер сам поставит application/x-www-form-urlencoded
         })
         .then(response => response.json())
         .then(result => {
-            if (result && result.success) callback(true);
-            else callback(false);
+            if (result && result.success) {
+                // Если таблица не обновилась, но JSON сохранён, предупредим в консоли
+                if (result.warning) console.warn('Предупреждение:', result.warning);
+                callback(true);
+            } else {
+                console.error('Ошибка сервера:', result.error);
+                callback(false);
+            }
         })
-        .catch(() => callback(false));
+        .catch(err => {
+            console.error('Ошибка сети:', err);
+            callback(false);
+        });
     }
 
     function downloadJSON(data, filename) {
