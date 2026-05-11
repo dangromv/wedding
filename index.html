@@ -153,7 +153,7 @@
 
 <script>
     // ⚠️ ВСТАВЬТЕ URL ВАШЕГО РАЗВЕРНУТОГО ВЕБ-ПРИЛОЖЕНИЯ GOOGLE APPS SCRIPT
-    const GAS_URL = 'https://script.google.com/macros/s/AKfycbxpuB5Ph6M88Ln1VQZrAzY-2-WuQdStDt8krcG6Xxc92O-qkpiO4Ip74KODH2ZZCw6G/exec';
+    const GAS_URL = 'https://script.google.com/macros/s/AKfycbyuLIVJnwKCGEaoQLGlU8XMwjjwwD9dRGuB4s7vdLnT_eYRFD_Ltifv4w01Tlhv7lv_/exec';
 
     let attend = '', alone = '', companionCount = 1;
     const drinkOptions = [
@@ -298,11 +298,12 @@
         return data;
     }
 
+    // ОБНОВЛЁННАЯ ФУНКЦИЯ ОТПРАВКИ – больше никакого preflight
     function submitViaFetch(data, callback) {
         fetch(GAS_URL, {
             method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(data)
+            body: new URLSearchParams({ data: JSON.stringify(data) })
+            // не указываем Content-Type, браузер сам поставит application/x-www-form-urlencoded
         })
         .then(response => response.json())
         .then(result => {
